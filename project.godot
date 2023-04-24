@@ -1,0 +1,22 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Debug Menu Demo"
+config/description="Demo for the debug menu add-on (inspired by id Tech 6/7)."
+run/main_scene="res://debug_menu.tscn"
+config/features=PackedStringArray("4.1")
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/vsync/vsync_mode=0
