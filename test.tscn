@@ -1,0 +1,109 @@
+[gd_scene load_steps=11 format=3 uid="uid://cyn6ed84egpjf"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5ncgh"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_1t3ds"]
+sky_material = SubResource("ProceduralSkyMaterial_5ncgh")
+
+[sub_resource type="Environment" id="Environment_3o4rc"]
+background_mode = 2
+sky = SubResource("Sky_1t3ds")
+tonemap_mode = 2
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_wetkq"]
+size = Vector3(1024, 1, 1024)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xt6kg"]
+albedo_color = Color(0.294118, 0.431373, 0.396078, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_5v4of"]
+
+[sub_resource type="Gradient" id="Gradient_yerv8"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w3fs2"]
+gradient = SubResource("Gradient_yerv8")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_guhnx"]
+albedo_texture = SubResource("GradientTexture2D_w3fs2")
+metallic = 1.0
+metallic_texture = SubResource("GradientTexture2D_w3fs2")
+roughness_texture = SubResource("GradientTexture2D_w3fs2")
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b641o"]
+albedo_color = Color(1, 0.0823529, 0, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+shadow_blur = 2.0
+directional_shadow_mode = 0
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 12.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3o4rc")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.667861, -0.434827, 0.60406, 0, 0.811596, 0.584219, -0.744286, -0.390177, 0.542033, 3.42352, 3.8767, 2.99318)
+fov = 60.0
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_wetkq")
+surface_material_override/0 = SubResource("StandardMaterial3D_xt6kg")
+
+[node name="Torus" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+mesh = SubResource("TorusMesh_5v4of")
+surface_material_override/0 = SubResource("StandardMaterial3D_guhnx")
+
+[node name="Torus2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+mesh = SubResource("TorusMesh_5v4of")
+surface_material_override/0 = SubResource("StandardMaterial3D_b641o")
+
+[node name="Torus3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16509, 0.8, 0.130013)
+mesh = SubResource("TorusMesh_5v4of")
+
+[node name="Torus4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38156, 0.8, -2.10068)
+mesh = SubResource("TorusMesh_5v4of")
+
+[node name="Torus5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.81478, 0.8, -2.87771)
+mesh = SubResource("TorusMesh_5v4of")
+
+[node name="Torus6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.60249, 0.8, 0.779648)
+mesh = SubResource("TorusMesh_5v4of")
+
+[node name="Torus7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.44719, 0.8, -1.73311)
+mesh = SubResource("TorusMesh_5v4of")
+
+[node name="Torus8" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.149363, -0.988782, 0, 0.988782, 0.149363, -2.49761, 1.85614, -1.5474)
+mesh = SubResource("TorusMesh_5v4of")
+
+[node name="Torus9" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.730007, -0.675773, -0.10208, 0, 0.149363, -0.988782, 0.683439, 0.721818, 0.109036, -0.129876, 1.94662, -1.5474)
+mesh = SubResource("TorusMesh_5v4of")
+
+[node name="Torus10" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.969145, -0.243727, -0.0368167, 5.43898e-09, 0.149363, -0.988782, 0.246492, -0.958273, -0.144754, 1.64747, 2.03829, -1.5474)
+mesh = SubResource("TorusMesh_5v4of")
+
+[node name="Torus11" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.792644, -0.517793, 0.321878, -0.381576, -0.833075, -0.400481, 0.475515, 0.194618, -0.85791, 0.491417, 1.71169, 2.59955)
+mesh = SubResource("TorusMesh_5v4of")

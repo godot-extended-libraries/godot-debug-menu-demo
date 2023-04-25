@@ -21,6 +21,7 @@ extends Control
 @export var cpu_graph: Panel
 @export var gpu_graph: Panel
 @export var information: Label
+@export var settings: Label
 
 # Value of `Time.get_ticks_usec()` on the previous frame.
 var last_tick := 0
@@ -30,12 +31,78 @@ var frame_history_total: Array = []
 var frame_history_cpu: Array = []
 var frame_history_gpu: Array = []
 
-func _ready():
+var frame_time_gradient := Gradient.new()
+
+func _ready() -> void:
+	frame_time_gradient.set_color(0, Color.RED)
+	frame_time_gradient.set_color(1, Color.CYAN)
+	frame_time_gradient.add_point(0.3333, Color.YELLOW)
+	frame_time_gradient.add_point(0.6667, Color.GREEN)
+
+	get_viewport().size_changed.connect(update_settings_label)
+
 	# Enable required time measurements to display CPU/GPU frame time information.
 	RenderingServer.viewport_set_measure_render_time(get_viewport().get_viewport_rid(), true)
 	update_information_label()
+	update_settings_label()
 
-func update_information_label():
+## Update hardware information label (this can change at runtime based on window size and graphics settings).
+func update_settings_label() -> void:
+	var vsync_string := ""
+	match DisplayServer.window_get_vsync_mode():
+		DisplayServer.VSYNC_DISABLED:
+			vsync_string = "Disabled"
+		DisplayServer.VSYNC_ENABLED:
+			vsync_string = "Enabled"
+		DisplayServer.VSYNC_ADAPTIVE:
+			vsync_string = "Adaptive"
+		DisplayServer.VSYNC_MAILBOX:
+			vsync_string = "Mailbox"
+
+	var viewport := get_viewport()
+	settings.text = (
+			"%d×%d, V-Sync: %s\n" % [viewport.size.x, viewport.size.y, vsync_string]
+	)
+	# Display 3D settings only if relevant.
+	if viewport.get_camera_3d():
+		var antialiasing_string := ""
+		if viewport.use_taa:
+			antialiasing_string += (" + " if not antialiasing_string.is_empty() else "") + "TAA"
+		if viewport.msaa_3d >= Viewport.MSAA_2X:
+			antialiasing_string += (" + " if not antialiasing_string.is_empty() else "") + "%d× MSAA" % pow(2, viewport.msaa_3d)
+		if viewport.screen_space_aa == Viewport.SCREEN_SPACE_AA_FXAA:
+			antialiasing_string += (" + " if not antialiasing_string.is_empty() else "") + "FXAA"
+
+		var environment := viewport.get_camera_3d().get_world_3d().environment
+		settings.text += (
+				"3D scale (%s): %d%% = %d×%d\n" % ["Bilinear" if viewport.scaling_3d_mode == Viewport.SCALING_3D_MODE_BILINEAR else "FSR 1.0", viewport.scaling_3d_scale * 100, viewport.size.x * viewport.scaling_3d_scale, viewport.size.y * viewport.scaling_3d_scale]
+				+ "Antialiasing: %s\n" % antialiasing_string
+				+ "Dir. Shadow Size, Filter: %d, %d\n" % [ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/size"), ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality")]
+				+ "Pos. Shadow Size, Filter: %d, %d" % [ProjectSettings.get_setting("rendering/lights_and_shadows/positional_shadow/size"), ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality")]
+		)
+
+		if environment.ssr_enabled:
+			settings.text += "\nSSR: On"
+
+		if environment.ssao_enabled:
+			settings.text += "\nSSAO: On"
+
+		if environment.ssil_enabled:
+			settings.text += "\nSSIL: On"
+
+		if environment.sdfgi_enabled:
+			settings.text += "\nSDFGI: %d Cascades" % environment.sdfgi_cascades
+
+		if environment.glow_enabled:
+			settings.text += "\nGlow: On"
+
+		if environment.volumetric_fog_enabled:
+			settings.text += "\nVolumetric Fog: On"
+			# FIXME: 3D scale is displayed twice due to % formatting.
+
+
+## Update hardware/software information label (this never changes at runtime).
+func update_information_label() -> void:
 	var adapter_string := ""
 	if RenderingServer.get_video_adapter_vendor() in RenderingServer.get_video_adapter_name():
 		# Avoid repeating vendor name before adapter name.
@@ -51,29 +118,14 @@ func update_information_label():
 	else:
 		driver_info_string = "(unknown)"
 
-	var vsync_string := ""
-	match DisplayServer.window_get_vsync_mode():
-		DisplayServer.VSYNC_DISABLED:
-			vsync_string = "Disabled"
-		DisplayServer.VSYNC_ENABLED:
-			vsync_string = "Enabled"
-		DisplayServer.VSYNC_ADAPTIVE:
-			vsync_string = "Adaptive"
-		DisplayServer.VSYNC_MAILBOX:
-			vsync_string = "Mailbox"
-
 	information.text = (
-			"%s (%d threads)\n" % [OS.get_processor_name(), OS.get_processor_count()]
-			+ "%d×%d (%d%%)\n" % [get_viewport().size.x, get_viewport().size.y, get_viewport().scaling_3d_scale * 100]
-			+ "Vulkan %s\n" % RenderingServer.get_video_adapter_api_version()
-			+ "%s\n" % adapter_string
-			+ "Driver %s\n" % driver_info_string
-			+ "V-Sync: %s" % vsync_string
+			"%s, %d threads\n" % [OS.get_processor_name().replace("(R)", "").replace("(TM)", ""), OS.get_processor_count()]
+			+ "%s %s %s, Vulkan %s\n" % [OS.get_name(), "64-bit" if OS.has_feature("64") else "32-bit", "(double precision)" if OS.has_feature("double") else "", RenderingServer.get_video_adapter_api_version()]
+			+ "%s, %s" % [adapter_string, driver_info_string]
 	)
 
 
-func _process(delta):
-
+func _process(_delta: float) -> void:
 	# Different between the last two rendered frames in milliseconds.
 	var frametime := (Time.get_ticks_usec() - last_tick) * 0.001
 	fps.text = str(Engine.get_frames_per_second()) + " FPS"

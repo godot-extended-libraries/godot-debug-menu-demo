@@ -12,11 +12,22 @@ config_version=5
 
 config/name="Debug Menu Demo"
 config/description="Demo for the debug menu add-on (inspired by id Tech 6/7)."
-run/main_scene="res://debug_menu.tscn"
+run/main_scene="res://test.tscn"
 config/features=PackedStringArray("4.1")
+
+[autoload]
+
+DebugMenu="*res://debug_menu.tscn"
 
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/vsync/vsync_mode=0
+
+[rendering]
+
+scaling_3d/mode=1
+scaling_3d/scale=0.75
+anti_aliasing/quality/msaa_3d=1
+anti_aliasing/quality/use_taa=true

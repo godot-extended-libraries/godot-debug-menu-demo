@@ -5,7 +5,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ki0n8"]
 bg_color = Color(0, 0, 0, 0.25098)
 
-[node name="DebugMenu" type="Control" node_paths=PackedStringArray("fps", "frame_time", "frame_number", "frame_history_total_avg", "frame_history_total_min", "frame_history_total_max", "frame_history_total_last", "frame_history_cpu_avg", "frame_history_cpu_min", "frame_history_cpu_max", "frame_history_cpu_last", "frame_history_gpu_avg", "frame_history_gpu_min", "frame_history_gpu_max", "frame_history_gpu_last", "fps_graph", "total_graph", "cpu_graph", "gpu_graph", "information")]
+[node name="DebugMenu" type="Control" node_paths=PackedStringArray("fps", "frame_time", "frame_number", "frame_history_total_avg", "frame_history_total_min", "frame_history_total_max", "frame_history_total_last", "frame_history_cpu_avg", "frame_history_cpu_min", "frame_history_cpu_max", "frame_history_cpu_last", "frame_history_gpu_avg", "frame_history_gpu_min", "frame_history_gpu_max", "frame_history_gpu_last", "fps_graph", "total_graph", "cpu_graph", "gpu_graph", "information", "settings")]
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 3
 anchors_preset = 1
@@ -39,6 +39,7 @@ total_graph = NodePath("VBoxContainer/TotalGraph/Graph")
 cpu_graph = NodePath("VBoxContainer/CPUGraph/Graph")
 gpu_graph = NodePath("VBoxContainer/GPUGraph/Graph")
 information = NodePath("VBoxContainer/Information")
+settings = NodePath("VBoxContainer/Settings")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -358,9 +359,25 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
 text = "13th Gen Intel(R) Core(TM) i0-1234K
-1234×567 (123%)
-Vulkan 1.2.34
-NVIDIA GeForce RTX 1234
-Driver 123.45.67
-V-Sync: ???"
+Windows 12 64-bit (double precision), Vulkan 1.2.34
+NVIDIA GeForce RTX 1234, 123.45.67"
+horizontal_alignment = 2
+
+[node name="Settings" type="Label" parent="VBoxContainer"]
+modulate = Color(0.862745, 0.862745, 1, 0.752941)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 12
+text = "1234×567, V-Sync: Disabled
+3D Scale (FSR 1.0): 100% = 1234×567
+Antialiasing: TAA + 2× MSAA + FXAA
+Dir. Shadow Size, Filter: 1234, X
+Pos. Shadow Size, Filter: 1234, X
+SSR: On
+SSAO: On
+SSIL: On
+SDFGI: 1 Cascades
+Glow: On
+Volumetric Fog: On"
 horizontal_alignment = 2
