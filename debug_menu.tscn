@@ -53,7 +53,6 @@ theme_override_constants/separation = 0
 
 [node name="FPS" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_constants/line_spacing = 0
@@ -63,7 +62,6 @@ horizontal_alignment = 2
 
 [node name="FrameTime" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -104,7 +102,7 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
-text = "min"
+text = "best"
 horizontal_alignment = 2
 
 [node name="MaxHeader" type="Label" parent="VBoxContainer/FrameTimeHistory"]
@@ -113,7 +111,7 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
-text = "max"
+text = "worst"
 horizontal_alignment = 2
 
 [node name="LastHeader" type="Label" parent="VBoxContainer/FrameTimeHistory"]
@@ -137,7 +135,6 @@ horizontal_alignment = 2
 [node name="TotalAvg" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -147,7 +144,6 @@ horizontal_alignment = 2
 [node name="TotalMin" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -157,7 +153,6 @@ horizontal_alignment = 2
 [node name="TotalMax" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -167,7 +162,6 @@ horizontal_alignment = 2
 [node name="TotalLast" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -186,7 +180,6 @@ horizontal_alignment = 2
 [node name="CPUAvg" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -196,7 +189,6 @@ horizontal_alignment = 2
 [node name="CPUMin" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -206,7 +198,6 @@ horizontal_alignment = 2
 [node name="CPUMax" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -216,7 +207,6 @@ horizontal_alignment = 2
 [node name="CPULast" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -235,7 +225,6 @@ horizontal_alignment = 2
 [node name="GPUAvg" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -245,7 +234,6 @@ horizontal_alignment = 2
 [node name="GPUMin" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -255,7 +243,6 @@ horizontal_alignment = 2
 [node name="GPUMax" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
@@ -265,7 +252,6 @@ horizontal_alignment = 2
 [node name="GPULast" type="Label" parent="VBoxContainer/FrameTimeHistory"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
