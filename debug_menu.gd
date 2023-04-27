@@ -23,6 +23,10 @@ extends Control
 @export var information: Label
 @export var settings: Label
 
+const GRAPH_SIZE = Vector2(150, 25)
+const GRAPH_MIN_FPS = 10
+const GRAPH_MAX_FPS = 160
+
 # Value of `Time.get_ticks_usec()` on the previous frame.
 var last_tick := 0
 
@@ -30,7 +34,7 @@ var last_tick := 0
 var frame_history_total: Array[float] = []
 var frame_history_cpu: Array[float] = []
 var frame_history_gpu: Array[float] = []
-var fps_history: Array[Float] = []  # Only used for graphs.
+var fps_history: Array[float] = []  # Only used for graphs.
 
 var frame_time_gradient := Gradient.new()
 
@@ -91,7 +95,6 @@ func update_settings_label() -> void:
 
 		if environment.ssao_enabled:
 			settings.text += "\nSSAO: On"
-#			settings.text += "\nSSAO: On (%d)" % RenderingServer.environment_get_ssao_quality()
 
 		if environment.ssil_enabled:
 			settings.text += "\nSSIL: On"
@@ -160,12 +163,18 @@ func update_information_label() -> void:
 
 
 func _fps_graph_draw() -> void:
-	var fps_polyline = PackedVector2Array()
-	draw_polyline(fps_polyline, 2.0, true)
-	fps_graph.draw_circle(Vector2.ZERO, 50, Color.RED)
+	var fps_polyline := PackedVector2Array()
+	fps_polyline.resize(100)
+	for fps_index in fps_history.size():
+		fps_polyline[fps_index] = Vector2(
+				remap(fps_index, 0, fps_history.size(), 0, GRAPH_SIZE.x),
+				remap(clampf(fps_history[fps_index], GRAPH_MIN_FPS, GRAPH_MAX_FPS), GRAPH_MIN_FPS, GRAPH_MAX_FPS, GRAPH_SIZE.y, 0.0)
+		)
+	fps_graph.draw_polyline(fps_polyline, Color.GREEN)
 
 
 func _process(_delta: float) -> void:
+	fps_graph.queue_redraw()
 	Engine.max_fps = 120
 	# Difference between the last two rendered frames in milliseconds.
 	var frametime := (Time.get_ticks_usec() - last_tick) * 0.001
