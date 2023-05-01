@@ -15,6 +15,7 @@ ssr_enabled = true
 ssao_enabled = true
 ssil_enabled = true
 sdfgi_enabled = true
+glow_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_wetkq"]
 size = Vector3(1024, 1, 1024)
@@ -108,3 +109,10 @@ mesh = SubResource("TorusMesh_5v4of")
 [node name="Torus11" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.792644, -0.517793, 0.321878, -0.381576, -0.833075, -0.400481, 0.475515, 0.194618, -0.85791, 0.491417, 1.71169, 2.59955)
 mesh = SubResource("TorusMesh_5v4of")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.22689, 0)
+light_color = Color(0.372549, 0.305882, 0.12549, 1)
+light_volumetric_fog_energy = 500.0
+shadow_enabled = true
+omni_range = 15.0
