@@ -47,7 +47,7 @@ var fps_history: Array[float] = []  # Only used for graphs.
 var frametime_avg := GRAPH_MIN_FRAMETIME
 var frametime_cpu_avg := GRAPH_MAX_FRAMETIME
 var frametime_gpu_avg := GRAPH_MIN_FRAMETIME
-var frames_per_second := GRAPH_MIN_FPS
+var frames_per_second := float(GRAPH_MIN_FPS)
 
 var frame_time_gradient := Gradient.new()
 
@@ -86,8 +86,16 @@ func _ready() -> void:
 
 ## Update hardware information label (this can change at runtime based on window size and graphics settings).
 func update_settings_label() -> void:
+	var rendering_method_string := ""
+	match str(ProjectSettings.get_setting("rendering/renderer/rendering_method")):
+		"forward_plus":
+			rendering_method_string = "Forward+"
+		"mobile":
+			rendering_method_string = "Forward Mobile"
+		"gl_compatibility":
+			rendering_method_string = "Compatibility"
 	var viewport := get_viewport()
-	settings.text = "Viewport: %d×%d\n" % [viewport.size.x, viewport.size.y]
+	settings.text = "Method: %s, Viewport: %d×%d\n" % [rendering_method_string, viewport.size.x, viewport.size.y]
 
 	# Display 3D settings only if relevant.
 	if viewport.get_camera_3d():
@@ -100,11 +108,12 @@ func update_settings_label() -> void:
 			antialiasing_3d_string += (" + " if not antialiasing_3d_string.is_empty() else "") + "FXAA"
 
 		var environment := viewport.get_camera_3d().get_world_3d().environment
-		settings.text += (
-				"3D scale (%s): %d%% = %d×%d" % ["Bilinear" if viewport.scaling_3d_mode == Viewport.SCALING_3D_MODE_BILINEAR else "FSR 1.0", viewport.scaling_3d_scale * 100, viewport.size.x * viewport.scaling_3d_scale, viewport.size.y * viewport.scaling_3d_scale]
-#				+ "Dir. Shadow Size, Filter: %d, %d\n" % [ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/size"), ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality")]
-#				+ "Pos. Shadow Size, Filter: %d, %d" % [ProjectSettings.get_setting("rendering/lights_and_shadows/positional_shadow/size"), ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality")]
-		)
+		settings.text += "3D scale (%s): %d%% = %d×%d" % [
+				"Bilinear" if viewport.scaling_3d_mode == Viewport.SCALING_3D_MODE_BILINEAR else "FSR 1.0",
+				viewport.scaling_3d_scale * 100,
+				viewport.size.x * viewport.scaling_3d_scale,
+				viewport.size.y * viewport.scaling_3d_scale,
+		]
 
 		if not antialiasing_3d_string.is_empty():
 			settings.text += "\n3D Antialiasing: %s" % antialiasing_3d_string
@@ -138,11 +147,13 @@ func update_settings_label() -> void:
 ## Update hardware/software information label (this never changes at runtime).
 func update_information_label() -> void:
 	var adapter_string := ""
-	if RenderingServer.get_video_adapter_vendor() in RenderingServer.get_video_adapter_name():
+	# Make "NVIDIA Corporation" and "NVIDIA" be considered identical (required when using OpenGL to avoid redundancy).
+	if RenderingServer.get_video_adapter_vendor().trim_suffix(" Corporation") in RenderingServer.get_video_adapter_name():
 		# Avoid repeating vendor name before adapter name.
-		adapter_string = RenderingServer.get_video_adapter_name()
+		# Trim redundant suffix sometimes reported by NVIDIA graphics cards when using OpenGL.
+		adapter_string = RenderingServer.get_video_adapter_name().trim_suffix("/PCIe/SSE2")
 	else:
-		adapter_string = RenderingServer.get_video_adapter_vendor() + " - " + RenderingServer.get_video_adapter_name()
+		adapter_string = RenderingServer.get_video_adapter_vendor() + " - " + RenderingServer.get_video_adapter_name().trim_suffix("/PCIe/SSE2")
 
 	# Graphics driver version information isn't always availble.
 	var driver_info := OS.get_video_adapter_driver_info()
@@ -164,7 +175,7 @@ func update_information_label() -> void:
 		release_string = "release"
 
 	var graphics_api_string := ""
-	if str(ProjectSettings.get_setting("rendering/renderer/rendering_method")) != "compatibility":
+	if str(ProjectSettings.get_setting("rendering/renderer/rendering_method")) != "gl_compatibility":
 		graphics_api_string = "Vulkan"
 	else:
 		if OS.has_feature("web"):
@@ -230,7 +241,6 @@ func _gpu_graph_draw() -> void:
 		)
 	# Don't use antialiasing to speed up line drawing, but use a width that scales with
 	# viewport scale to keep the line easily readable on hiDPI displays.
-	var end = Time.get_ticks_usec()
 	gpu_graph.draw_polyline(gpu_polyline, frame_time_gradient.sample(remap(1000.0 / frametime_gpu_avg, GRAPH_MIN_FPS, GRAPH_MAX_FPS, 0.0, 1.0)), 1.0)
 
 
