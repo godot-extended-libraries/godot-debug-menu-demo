@@ -369,7 +369,8 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
-text = "Viewport: 1234×567
+text = "Rendering Method: Forward+
+Window: 1234×567, Viewport: 1234×567
 3D Scale (FSR 1.0): 100% = 1234×567
 3D Antialiasing: TAA + 2× MSAA + FXAA
 SSR: 123 Steps

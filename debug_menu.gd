@@ -94,8 +94,15 @@ func update_settings_label() -> void:
 			rendering_method_string = "Forward Mobile"
 		"gl_compatibility":
 			rendering_method_string = "Compatibility"
+	settings.text = "Rendering Method: %s\n" % rendering_method_string
+
 	var viewport := get_viewport()
-	settings.text = "Method: %s, Viewport: %d×%d\n" % [rendering_method_string, viewport.size.x, viewport.size.y]
+
+	if viewport.content_scale_mode == Window.CONTENT_SCALE_MODE_VIEWPORT:
+		settings.text += "Viewport: %d×%d, Window: %d×%d\n" % [viewport.get_visible_rect().size.x, viewport.get_visible_rect().size.y, viewport.size.x, viewport.size.y]
+	else:
+		# Window size matches viewport size.
+		settings.text += "Viewport: %d×%d\n" % [viewport.size.x, viewport.size.y]
 
 	# Display 3D settings only if relevant.
 	if viewport.get_camera_3d():
@@ -111,8 +118,8 @@ func update_settings_label() -> void:
 		settings.text += "3D scale (%s): %d%% = %d×%d" % [
 				"Bilinear" if viewport.scaling_3d_mode == Viewport.SCALING_3D_MODE_BILINEAR else "FSR 1.0",
 				viewport.scaling_3d_scale * 100,
-				viewport.size.x * viewport.scaling_3d_scale,
-				viewport.size.y * viewport.scaling_3d_scale,
+				viewport.get_visible_rect().size.x * viewport.scaling_3d_scale,
+				viewport.get_visible_rect().size.y * viewport.scaling_3d_scale,
 		]
 
 		if not antialiasing_3d_string.is_empty():
