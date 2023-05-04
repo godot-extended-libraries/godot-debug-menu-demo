@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cyn6ed84egpjf"]
+[gd_scene load_steps=14 format=3 uid="uid://cyn6ed84egpjf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5ncgh"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -43,6 +43,44 @@ texture_filter = 5
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b641o"]
 albedo_color = Color(1, 0.0823529, 0, 1)
 
+[sub_resource type="Animation" id="Animation_bniwj"]
+resource_name = "move"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_physp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sld3c"]
+_data = {
+"RESET": SubResource("Animation_physp"),
+"move": SubResource("Animation_bniwj")
+}
+
 [node name="Node3D" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -56,8 +94,10 @@ directional_shadow_max_distance = 12.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3o4rc")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.667861, -0.434827, 0.60406, 0, 0.811596, 0.584219, -0.744286, -0.390177, 0.542033, 3.42352, 3.8767, 2.99318)
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Pivot"]
+transform = Transform3D(0.667861, -0.434826, 0.604059, 0, 0.811596, 0.58422, -0.744286, -0.390177, 0.542033, 3.42352, 3.8767, 2.99318)
 fov = 60.0
 
 [node name="Ground" type="MeshInstance3D" parent="."]
@@ -116,3 +156,9 @@ light_color = Color(0.372549, 0.305882, 0.12549, 1)
 light_volumetric_fog_energy = 500.0
 shadow_enabled = true
 omni_range = 15.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "move"
+libraries = {
+"": SubResource("AnimationLibrary_sld3c")
+}
