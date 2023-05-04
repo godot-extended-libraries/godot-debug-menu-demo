@@ -381,3 +381,5 @@ Glow: On
 Volumetric Fog: On
 2D Antialiasing: 2× MSAA"
 horizontal_alignment = 2
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
