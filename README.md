@@ -43,6 +43,12 @@ if you do not have Git installed.
 - Import the Godot project using the project manager and open it in the editor.
 - Run the main scene by pressing <kbd>F5</kbd>.
 
+## Usage
+
+- Press <kbd>F3</kbd> while the project is running. This cycles between no debug
+  menu, a compact debug menu (only FPS and frametime visible) and a full debug
+  menu.
+
 ## License
 
 Copyright © 2023-present Hugo Locurcio and contributors
