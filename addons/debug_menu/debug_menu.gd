@@ -1,6 +1,5 @@
 extends Control
 
-
 @export var fps: Label
 @export var frame_time: Label
 @export var frame_number: Label
@@ -110,12 +109,19 @@ func _ready() -> void:
 	update_information_label()
 	update_settings_label()
 
-func _input(event):
-	if event.is_action_pressed(&"cycle_debug_menu"):
+
+func _input(event: InputEvent) -> void:
+	#if event.is_action_pressed(&"cycle_debug_menu"):
+	if Input.is_key_pressed(KEY_F3):
 		style = wrapi(style + 1, 0, Style.MAX) as Style
+
 
 ## Update hardware information label (this can change at runtime based on window size and graphics settings).
 func update_settings_label() -> void:
+	settings.text = ""
+	if ProjectSettings.has_setting("application/config/version"):
+		settings.text += "Project Version: %s\n" % ProjectSettings.get_setting("application/config/version")
+
 	var rendering_method_string := ""
 	match str(ProjectSettings.get_setting("rendering/renderer/rendering_method")):
 		"forward_plus":
@@ -124,7 +130,7 @@ func update_settings_label() -> void:
 			rendering_method_string = "Forward Mobile"
 		"gl_compatibility":
 			rendering_method_string = "Compatibility"
-	settings.text = "Rendering Method: %s\n" % rendering_method_string
+	settings.text += "Rendering Method: %s\n" % rendering_method_string
 
 	var viewport := get_viewport()
 

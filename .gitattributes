@@ -1,0 +1,5 @@
+# The add-on code in this repository is copied from
+# <https://github.com/godot-extended-libraries/godot-debug-menu> regularly.
+# Please open pull requests for the add-on code itself there, not in
+# this demo repository.
+/addons linguist-vendored

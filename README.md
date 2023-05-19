@@ -1,33 +1,47 @@
-# Godot Debug Menu
+# Debug Menu add-on demo project for Godot 4.x
 
-Displays performance information in a Godot project during gameplay. Inspired by
-id Tech 6/7's performance overlay.
+**Displays performance information in a Godot project during gameplay.**
+Can be used when running from the editor and in exported projects.
+Inspired by id Tech 6/7's performance overlay.
 
-## Why use this debug menu?
+![Screenshot](https://raw.githubusercontent.com/Calinou/media/master/godot-debug-menu-demo/screenshot.png)
 
-- Compared to the Godot editor's Profiler, Monitors and Visual Profiler bottom
-  panels, you can look at an in-game debug menu while the project is running,
-  even in fullscreen if you only have a single monitor.
-    - Rendering performance is highly dependent on window size, so resizing the
-      window is not advised for reliable performance measurements in real world
-      scenarios.
-- This debug menu accurately displays graphs and best/worst frametime metrics
-  over a period of the last 150 rendered frames, which is useful to diagnose
-  stuttering issues. The Monitor bottom panel is only updated once a second and
-  doesn't feature a 1% low FPS metric, which makes tracking stuttering
-  difficult when relying solely on the monitors.
-- This debug menu can be used in exported projects to reliably test performance
-  without any editor interference. This includes testing on mobile and Web
-  platforms, which tend to be more difficult to set up for profiling within
-  Godot (if it's even possible).
-- This debug menu can be used in exported projects for tech support purposes.
-  For example, in a bug report, you could ask a player to upload screenshots
-  with the debug menu visible to troubleshoot performance issues.
+This repository contains the demo project for the
+[Debug Menu add-on](https://github.com/godot-extended-libraries/godot-debug-menu).
+The add-on's code is included in this repository and is mirrored periodically.
 
-External tools such as RTSS or [MangoHud](https://github.com/flightlessmango/MangoHud)
-provide some insight on how well a project actually runs. However, they lack
-information on engine-specific things such as per-frame CPU/GPU time and
-graphics settings.
+Please report issues specific to the add-on
+[here](https://github.com/godot-extended-libraries/godot-debug-menu), not in this repository.
+
+## Try it out
+
+> **Note**
+>
+> This add-on only supports Godot 4.x, not Godot 3.x.
+
+### Using the Asset Library
+
+- Open the Godot project manager.
+- Navigate to the **Templates** tab and search for "debug menu".
+- Install the [*Debug Menu Demo*](https://godotengine.org/asset-library/asset/1903) project.
+
+### Manual installation
+
+Manual installation lets you try pre-release versions of this demo by following its
+`master` branch.
+
+- Clone this Git repository:
+
+```bash
+git clone https://github.com/godot-extended-libraries/godot-debug-menu-demo.git
+```
+
+Alternatively, you can
+[download a ZIP archive](https://github.com/godot-extended-libraries/godot-debug-menu-demo/archive/master.zip)
+if you do not have Git installed.
+
+- Import the Godot project using the project manager and open it in the editor.
+- Run the main scene by pressing <kbd>F5</kbd>.
 
 ## License
 

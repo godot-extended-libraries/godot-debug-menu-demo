@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bg41amwjmcapd"]
+[gd_scene load_steps=3 format=3 uid="uid://cggqb75a8w8r"]
 
-[ext_resource type="Script" path="res://debug_menu.gd" id="1_g6ocd"]
+[ext_resource type="Script" path="res://addons/debug_menu/debug_menu.gd" id="1_p440y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ki0n8"]
 bg_color = Color(0, 0, 0, 0.25098)
@@ -18,7 +18,7 @@ offset_bottom = 408.0
 grow_horizontal = 0
 size_flags_horizontal = 8
 size_flags_vertical = 4
-script = ExtResource("1_g6ocd")
+script = ExtResource("1_p440y")
 fps = NodePath("VBoxContainer/FPS")
 frame_time = NodePath("VBoxContainer/FrameTime")
 frame_number = NodePath("VBoxContainer/FrameNumber")
@@ -369,7 +369,8 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 12
-text = "Rendering Method: Forward+
+text = "Project Version: 1.2.3
+Rendering Method: Forward+
 Window: 1234×567, Viewport: 1234×567
 3D Scale (FSR 1.0): 100% = 1234×567
 3D Antialiasing: TAA + 2× MSAA + FXAA
