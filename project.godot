@@ -15,7 +15,7 @@ config/description="Demo for the debug menu add-on."
 run/main_scene="res://test.tscn"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.svg"
-config/version="1.0.1"
+config/version="1.1.0"
 
 [autoload]
 
