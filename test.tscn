@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cyn6ed84egpjf"]
+[gd_scene load_steps=16 format=3 uid="uid://cyn6ed84egpjf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5ncgh"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -81,6 +81,11 @@ _data = {
 "move": SubResource("Animation_bniwj")
 }
 
+[sub_resource type="Gradient" id="Gradient_8hfrt"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dlbxm"]
+gradient = SubResource("Gradient_8hfrt")
+
 [node name="Node3D" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -162,3 +167,22 @@ autoplay = "move"
 libraries = {
 "": SubResource("AnimationLibrary_sld3c")
 }
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(707, 368)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1087, 148)
+texture = SubResource("GradientTexture2D_dlbxm")
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.501961)
+offset_left = 922.0
+offset_top = 197.0
+offset_right = 1233.0
+offset_bottom = 249.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "2D drawing example
+(should appear behind the debug menu).
+Also notice the Camera2D offset in the editor."
