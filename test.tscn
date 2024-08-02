@@ -179,11 +179,21 @@ position = Vector2(1087, 148)
 texture = SubResource("GradientTexture2D_dlbxm")
 
 [node name="CycleDebugMenuDisplayMode" type="Button" parent="."]
+process_mode = 3
 offset_left = 144.0
 offset_top = 58.0
 offset_right = 315.0
 offset_bottom = 102.0
 text = "Cycle Debug Menu"
+
+[node name="Pause" type="Button" parent="."]
+process_mode = 3
+offset_left = 144.0
+offset_top = 114.0
+offset_right = 315.0
+offset_bottom = 158.0
+toggle_mode = true
+text = "Pause"
 
 [node name="Label" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0.501961)
@@ -198,3 +208,4 @@ text = "2D drawing example
 Also notice the Camera2D offset in the editor."
 
 [connection signal="pressed" from="CycleDebugMenuDisplayMode" to="." method="_on_cycle_debug_menu_display_mode_pressed"]
+[connection signal="toggled" from="Pause" to="." method="_on_pause_toggled"]
